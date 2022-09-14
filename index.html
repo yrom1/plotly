@@ -11,28 +11,37 @@
         <!-- Plotly chart will be drawn inside this DIV -->
     </div>
     <script>
-        var trace1 = {
-            type: 'bar',
-            x: [1, 2, 3, 4],
-            y: [5, 10, 2, 8],
-            marker: {
-                color: 'blue',
-                line: {
-                    width: 2.5
+
+        (async function () {
+            var trace1 = {
+                type: 'bar',
+                x: [1, 2, 3, 4],
+                y: [5, 10, 2, 8],
+                marker: {
+                    color: 'blue',
+                    line: {
+                        width: 2.5
+                    }
                 }
-            }
-        };
+            };
 
-        var data = [trace1];
+            var data = [trace1];
+            const url = "https://raw.githubusercontent.com/yrom1/jira-python/main/JIRA_TITLE"
+            const title_r = fetch(url)
+                .then((response) => response.text())
+                .then((x) => {
+                    return x;
+                });
 
-        var layout = {
-            title: 'Responsive to window\'s size!',
-            font: { size: 22 }
-        };
+            let title = await title_r;
+            var layout = {
+                title: title,
+                font: { size: 18 }
+            };
+            var config = { responsive: true }
 
-        var config = { responsive: true }
-
-        Plotly.newPlot('myDiv', data, layout, config);
+            Plotly.newPlot('myDiv', data, layout, config);
+        })();
 
     </script>
 </body>
